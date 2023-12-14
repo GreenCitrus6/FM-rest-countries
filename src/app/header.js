@@ -1,7 +1,11 @@
 
 export default function Header() {
     return (
-        <header className="flex justify-between items-center sticky w-screen h-24 p-4 shadow-md shadow-gray-100">
+        <header className="flex justify-between items-center sticky overflow-hidden
+        h-24 
+        p-4 pr-8
+        bg-light-white
+        shadow-md shadow-gray-100">
             <h1 className="text-xl font-bold">Where in the world?</h1>
             <div className="flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
