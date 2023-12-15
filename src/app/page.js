@@ -6,7 +6,15 @@ import Link from 'next/link'
 import Header from './header'
 import CountryTile from './countrytile'
 
-function SearchBar() {
+function SearchBar( {filterByName, setInput} ) {
+
+  const handleInput = (e) => {
+    let input = (e.target.value).replace(/\W/gi, '');
+    
+    filterByName(input);
+    setInput(input);
+  } 
+
   return(
     <label className="flex justify-center
     w-[calc(100%-2em)]
@@ -19,7 +27,8 @@ function SearchBar() {
       m-6 mt-[-0.9em] pl-16
       rounded-lg shadow-md" 
       type="text"
-      placeholder="Search for a country..." />
+      placeholder="Search for a country..."
+      onChange={handleInput} />
     </label>
   )
 }
@@ -36,49 +45,110 @@ function FilterPicker({ filterByRegion }) {
     shadow-md shadow-gray-100"
     defaultValue="all" onChange={handlePickRegion}>
       <option value="all">Filter by Region</option>
-      <option value="africa">Africa</option>
-      <option value="america">America</option>
-      <option value="asia">Asia</option>
-      <option value="europe">Europe</option>
-      <option value="oceania">Oceania</option>
+      <option value="Africa">Africa</option>
+      <option value="America">America</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+      <option value="Oceania">Oceania</option>
     </select>
   )
 }
 
 export default function Home() {
+  const [apiUrl, setApiUrl] = useState('https://restcountries.com/v3.1/all?');
+  const [regionFilter, setRegionFilter] = useState('');
+  const [input, setInput] = useState('');
   const [countryData, setCountryData] = useState([]);
-  useEffect(() => {
+
+  function resetList() {
     fetch('https://restcountries.com/v3.1/all?')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+    .then((response) => response.json())
+    .then((data) => {
+      if (!regionFilter) {
         setCountryData(data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
-  }, [])
-
-  const filterByName = () => {
-
+      } else {
+        let tempArray = data.filter((country) => country.region === regionFilter);
+        setCountryData(tempArray);
+      }
+    })
   }
 
-  const filterByRegion = (selectedRegion) => {
-    console.log(selectedRegion);  
-    let apiUrl = `https://restcountries.com/v3.1/region/${selectedRegion}`;
-    if (selectedRegion === 'all') { 
-      apiUrl = 'https://restcountries.com/v3.1/all?';
+  useEffect(() => {   
+    fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      if (!regionFilter) {
+        setCountryData(data);
+      } else {
+        let tempArray = data.filter((country) => country.region === regionFilter);
+        setCountryData(tempArray);
+      }
+    })
+  }, [])
+
+  const filterByName = (searchInput) => {
+    setApiUrl(`https://restcountries.com/v3.1/name/${searchInput}` );
+    if (searchInput.trim() === '') {
+      setApiUrl('https://restcountries.com/v3.1/all?')
+      resetList();
     }
+
+    console.log(apiUrl);
+
     fetch(apiUrl)
      .then((response) => response.json())
      .then((data) => {
-      console.log(data);
-      setCountryData(data);
-     })
-     .catch((err) => {
-      console.log(err.message);
-     })
+      if (data.status === 404) {
+        setCountryData([]);
+        return;
+      } 
+        if (!regionFilter) {
+          setCountryData(data);
+        } else {
+          let tempArray = data.filter((country) => country.region === regionFilter);
+          setCountryData(tempArray);
+        }
+       })
+       .catch((err) => {
+        console.log(err.message);
+       })
   }
+  
+  const filterByRegion = (selectedRegion) => {
+    if (selectedRegion === 'all') {
+      setRegionFilter('');
+    } else {
+      setRegionFilter(selectedRegion);
+    }
+
+    let regionUrl = `https://restcountries.com/v3.1/region/${selectedRegion}`;
+
+    console.log(apiUrl);
+    
+    if (apiUrl === 'https://restcountries.com/v3.1/all?') {
+      if (selectedRegion === 'all') {
+        regionUrl = 'https://restcountries.com/v3.1/all?';
+      }
+      fetch(regionUrl)
+      .then((response) => response.json())
+      .then((data) => {
+          setCountryData(data);
+      })
+    } else {
+      fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        if (selectedRegion === 'all') {
+          setCountryData(data);
+          console.log(data)
+        } else {
+          let tempArray = data.filter((country) => country.region === selectedRegion);
+          setCountryData(tempArray);
+        }
+    })
+    }    
+  }
+
 
   return (
     <div className="bg-light-very-light-gray 
@@ -86,19 +156,18 @@ export default function Home() {
     font-Nunito">
       <main className="flex flex-col 
       w-full">
-        <SearchBar />
+        <SearchBar filterByName={filterByName} setInput={setInput} />
         <FilterPicker filterByRegion={filterByRegion} />
 
         <section id="countriesContainer" className="grid gap-10 justify-center
         w-full
         px-12 mt-8">
-          {/* <CountryTile countryData={countryData} />
-          <CountryTile countryData={countryData} /> */}
+
           {countryData.map((item, index) => {
             return(
               <CountryTile key={index} countryData={countryData} countryIndex={index} />
             )
-          })}
+        })}
 
         </section>
       </main>
