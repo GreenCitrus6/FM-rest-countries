@@ -1,9 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-import Image from 'next/image'
 import Link from 'next/link'
-import Header from './header'
 import CountryTile from './countrytile'
 
 function SearchBar( {filterByName, setInput} ) {
@@ -59,6 +57,7 @@ export default function Home() {
   const [regionFilter, setRegionFilter] = useState('');
   const [input, setInput] = useState('');
   const [countryData, setCountryData] = useState([]);
+
 
   function resetList() {
     fetch('https://restcountries.com/v3.1/all?')
@@ -165,7 +164,10 @@ export default function Home() {
 
           {countryData.map((item, index) => {
             return(
-              <CountryTile key={index} countryData={countryData} countryIndex={index} />
+              <Link href={{ pathname: '/pages/countrydetails', query: { country: countryData[index].name.official } }}
+              key={index} >
+                <CountryTile countryData={countryData} countryIndex={index} />
+              </Link>
             )
         })}
 
