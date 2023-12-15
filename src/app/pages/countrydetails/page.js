@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function CountryDetails() {
-    let [currentCountry, setCurrentCountry] = useState([{
+    const [currentCountry, setCurrentCountry] = useState([{
         "name": {
             "common": "Error: API Connection Timed Out",
             "official": "Territory of Christmas Island",
@@ -201,6 +201,8 @@ export default function CountryDetails() {
             "regex": "^(\\d{4})$"
         }
     }]); //placeholder so that the page doesn't crash upon loading before currentCountry's state is pulled from the API
+    // const [borderCountries, setBorderCountries] = useState([]);
+    const [borderCountries, setBorderCountries] = useState([]);
     const searchParams = useSearchParams()
  
     const country = searchParams.get('country')
@@ -213,13 +215,41 @@ export default function CountryDetails() {
             setCurrentCountry([...data]);
             console.log(currentCountry);
         })
+        .catch((err) => {
+            console.log(err.message);
+        })
     }, [])
 
 
+
+    function listObj(obj, deeperKey) {
+        let tempArr = [];
+        if (deeperKey !== 'none') {
+            for (let prop in obj) {
+                tempArr.push(obj[prop][deeperKey]);
+            }
+        } else {
+            for (let prop in obj) {
+                tempArr.push(obj[prop]);
+            }
+        }
+        
+        return (tempArr.join(', '));
+    }
+
+    function BorderCountry({ country, index }) {
+        
+        return (
+            <span className="bg-white shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center">
+                {country}
+            </span>
+        )
+    }
+
     return(
         <main className="bg-light-very-light-gray
-        min-h-[calc(100vh-6rem)] w-full 
-        grid cols-1 justify-center
+        min-h-[calc(100vh-6rem)] w-full mt-[6rem]
+        grid columns-1 justify-center
         p-8
         font-Nunito">
             <div>
@@ -238,22 +268,39 @@ export default function CountryDetails() {
 
                 <img src={currentCountry[0].flags.svg + "#svgView(preserveAspectRatio(none))"} alt={currentCountry[0].flags.alt} className="w-full aspect-[3/2]"/>
             </div>
-            <div>
-                <h2 className="font-extrabold text-2xl">{currentCountry[0].name.common}</h2>
+            <div className="mt-10">
+                <h2 className="font-extrabold text-2xl
+                mb-7">{currentCountry[0].name.common}</h2>
 
-                <p><span className="font-semibold">Native Name: </span>{currentCountry[0].name.nativeName.eng.common}</p>
-                <p><span className="font-semibold">Population: </span>{currentCountry[0].population}</p>
-                <p><span className="font-semibold">Region: </span>{currentCountry[0].region}</p>
-                <p><span className="font-semibold">Sub Region: </span>{currentCountry[0].subregion}</p>
-                <p><span className="font-semibold">Capital: </span>{currentCountry[0].capital}</p>
-
-                <p><span className="font-semibold">Top Level Domain: </span>{currentCountry[0].tld}</p>
-                <p><span className="font-semibold">Currencies: </span>{}</p>
-                <p><span className="font-semibold">Languages: </span>{}</p>
-            </div>
-            <div>
-                <h3>Border Countries: </h3>
+                <div>
+                    <p className="my-3"><span className="font-semibold">Native Name: </span>{
+                    listObj(currentCountry[0].name.nativeName, 'common')
+                    }</p>
+                    <p className="my-3"><span className="font-semibold">Population: </span>{(currentCountry[0].population).toLocaleString('US-en')}</p>
+                    <p className="my-3"><span className="font-semibold">Region: </span>{currentCountry[0].region}</p>
+                    <p className="my-3"><span className="font-semibold">Sub Region: </span>{currentCountry[0].subregion}</p>
+                    <p className="my-3"><span className="font-semibold">Capital: </span>{currentCountry[0].capital}</p>
+                </div>
                 
+                <div className="mt-10">
+                    <p className="my-3"><span className="font-semibold">Top Level Domain: </span>{currentCountry[0].tld}</p>
+                    <p className="my-3"><span className="font-semibold">Currencies: </span>{listObj(currentCountry[0].currencies, 'name')}</p>
+                    <p className="my-3"><span className="font-semibold">Languages: </span>{listObj(currentCountry[0].languages, 'none')}</p>
+                </div>
+            </div>
+            <div className="mt-6">
+                <h3 className="font-bold text-xl
+                mb-4">Border Countries: </h3>
+                
+                <div className="grid grid-cols-3 gap-3 ">
+                    
+                    {('borders' in currentCountry[0] ? currentCountry[0].borders.map((item, index) => {
+                        return (
+                            <BorderCountry key={index} index={index} country={item} />
+                        )
+                    }) : <BorderCountry country="None" />)}
+                </div>
+
             </div>
             
         </main>

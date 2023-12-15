@@ -151,7 +151,7 @@ export default function Home() {
 
   return (
     <div className="bg-light-very-light-gray 
-    w-full min-h-screen 
+    w-full min-h-screen mt-[6rem]
     font-Nunito">
       <main className="flex flex-col 
       w-full">
