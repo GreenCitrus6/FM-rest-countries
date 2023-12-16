@@ -158,9 +158,14 @@ export default function Home() {
         <SearchBar filterByName={filterByName} setInput={setInput} />
         <FilterPicker filterByRegion={filterByRegion} />
 
-        <section id="countriesContainer" className="grid gap-10 justify-center
+        <section id="countriesContainer" className="grid gap-10 justify-items-center
         w-full
-        px-12 mt-8">
+        px-12 mt-8
+        md:px-8
+        sm:grid-cols-2
+        lg:grid-cols-3
+        xl:grid-cols-4
+        xl:px-24">
 
           {countryData.map((item, index) => {
             return(
