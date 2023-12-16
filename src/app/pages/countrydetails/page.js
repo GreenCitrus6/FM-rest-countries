@@ -335,6 +335,18 @@ export default function CountryDetails() {
             </div>
             </div>
             
+            <div className="italic absolute left-4 top-[6.75rem]
+            md:left-8
+            xl:left-24
+            dark:text-light-white">
+                <p>Challenge by <Link 
+                    href="https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca" 
+                    target="_blank"
+                    className="text-sky-600">Frontend Mentor</Link>. Coded by <Link 
+                    href="https://github.com/GreenCitrus6" 
+                    target="_blank"
+                    className="text-sky-600">Daniel Aadland</Link></p>
+        </div>
         </main>
     )
 }
