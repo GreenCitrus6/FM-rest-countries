@@ -3,7 +3,7 @@ export default function CountryTile({ countryData, countryIndex }) {
 
     return(
         <div className="bg-light-white rounded-lg overflow-hidden shadow-md shadow-gray-100
-        max-w-[320px]">
+        max-w-[320px] h-full">
             <img src={countryData[countryIndex].flags.svg+'#svgView(preserveAspectRatio(none))'} alt={`flag of ${countryData[countryIndex].name.common}`} 
             className="w-full aspect-[3/2]"/>
             
