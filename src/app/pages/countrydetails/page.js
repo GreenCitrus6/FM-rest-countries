@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 export default function CountryDetails() {
     const [currentCountry, setCurrentCountry] = useState([{
         "name": {
-            "common": "Error: API Connection Timed Out",
+            "common": "Loading...",
             "official": "Territory of Christmas Island",
             "nativeName": {
                 "eng": {
@@ -17,7 +17,7 @@ export default function CountryDetails() {
             }
         },
         "tld": [
-            ".cx"
+            ""
         ],
         "cca2": "CX",
         "ccn3": "162",
@@ -27,7 +27,7 @@ export default function CountryDetails() {
         "unMember": false,
         "currencies": {
             "AUD": {
-                "name": "Australian dollar",
+                "name": "",
                 "symbol": "$"
             }
         },
@@ -38,16 +38,16 @@ export default function CountryDetails() {
             ]
         },
         "capital": [
-            "Flying Fish Cove"
+            ""
         ],
         "altSpellings": [
             "CX",
             "Territory of Christmas Island"
         ],
-        "region": "Oceania",
-        "subregion": "Australia and New Zealand",
+        "region": "",
+        "subregion": "",
         "languages": {
-            "eng": "English"
+            "eng": ""
         },
         "translations": {
             "ara": {
@@ -168,7 +168,7 @@ export default function CountryDetails() {
             "googleMaps": "https://goo.gl/maps/ZC17hHsQZpShN5wk9",
             "openStreetMaps": "https://www.openstreetmap.org/relation/6365444"
         },
-        "population": 2072,
+        "population": 0,
         "car": {
             "signs": [
                 "AUS"
@@ -183,7 +183,7 @@ export default function CountryDetails() {
         ],
         "flags": {
             "png": "https://flagcdn.com/w320/cx.png",
-            "svg": "https://flagcdn.com/cx.svg"
+            "svg": ""
         },
         "coatOfArms": {
             "png": "https://mainfacts.com/media/images/coats_of_arms/cx.png",
