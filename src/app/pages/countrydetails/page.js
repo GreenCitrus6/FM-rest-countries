@@ -203,17 +203,17 @@ export default function CountryDetails() {
     }]); //placeholder so that the page doesn't crash upon loading before currentCountry's state is pulled from the API
     // const [borderCountries, setBorderCountries] = useState([]);
     const [borderCountries, setBorderCountries] = useState([]);
-    const searchParams = useSearchParams()
- 
+    
+    // Get what country is to be displayed from the query
+    const searchParams = useSearchParams() 
     const country = searchParams.get('country')
     
+    // Fetch data for the displayed country from API, set it to CurrentCountry
     useEffect(() => {
         fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
             setCurrentCountry([...data]);
-            console.log(currentCountry);
         })
         .catch((err) => {
             console.log(err.message);
@@ -236,7 +236,7 @@ export default function CountryDetails() {
     }
 
     function BorderCountry({ country, index }) {
-        
+        // Card for border countries
         return (
             <span className="bg-light-very-light-gray shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center
             md:min-w-[6.5rem]

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import CountryTile from './countrytile'
 
-function SearchBar( {filterByName, setInput} ) {
+function SearchBar( {filterByName, setInput } ) {
 
   const handleInput = (e) => {
     let input = (e.target.value).replace(/[^\w\s]/gi, '');
@@ -58,106 +58,62 @@ function FilterPicker({ filterByRegion }) {
       <option value="Asia">Asia</option>
       <option value="Europe">Europe</option>
       <option value="Oceania">Oceania</option>
+      <option value="Antarctic">Antarctic</option>
     </select>
   )
 }
 
 export default function Home() {
-  const [apiUrl, setApiUrl] = useState('https://restcountries.com/v3.1/all?');
-  const [regionFilter, setRegionFilter] = useState('');
-  const [input, setInput] = useState('');
+  //Data of all countries, pulled from the API
   const [countryData, setCountryData] = useState([]);
+  //Data of countries that fit the region and search filters. This one is rendered to the DOM
+  const [filteredCountries, setFilteredCountries] = useState([]);
 
+  const [input, setInput] = useState('');
 
-  function resetList() {
+  useEffect(() => {   
     fetch('https://restcountries.com/v3.1/all?')
     .then((response) => response.json())
     .then((data) => {
-      if (!regionFilter) {
-        setCountryData(data);
-      } else {
-        let tempArray = data.filter((country) => country.region === regionFilter);
-        setCountryData(tempArray);
-      }
-    })
-  }
-
-  useEffect(() => {   
-    fetch(apiUrl)
-    .then((response) => response.json())
-    .then((data) => {
-      if (!regionFilter) {
-        setCountryData(data);
-      } else {
-        let tempArray = data.filter((country) => country.region === regionFilter);
-        setCountryData(tempArray);
-      }
+      setCountryData(data);
+      setFilteredCountries(data);
+      console.log(data);
     })
   }, [])
 
   const filterByName = (searchInput) => {
-    setApiUrl(`https://restcountries.com/v3.1/name/${searchInput}` );
-    if (searchInput.trim() === '') {
-      setApiUrl('https://restcountries.com/v3.1/all?')
-      resetList();
+    //when SearchBar is empty, show every country
+    if (searchInput == '') {
+      return setFilteredCountries(countryData);
     }
-
-    console.log(apiUrl);
-
-    fetch(apiUrl)
-     .then((response) => response.json())
-     .then((data) => {
-      if (data.status === 404) {
-        setCountryData([]);
-        return;
-      } 
-        if (!regionFilter) {
-          setCountryData(data);
-        } else {
-          let tempArray = data.filter((country) => country.region === regionFilter);
-          setCountryData(tempArray);
-        }
-       })
-       .catch((err) => {
-        console.log(err.message);
-       })
-  }
-  
-  const filterByRegion = (selectedRegion) => {
-    if (selectedRegion === 'all') {
-      setRegionFilter('');
-    } else {
-      setRegionFilter(selectedRegion);
-    }
-
-    let regionUrl = `https://restcountries.com/v3.1/region/${selectedRegion}`;
-
-    console.log(apiUrl);
     
-    if (apiUrl === 'https://restcountries.com/v3.1/all?') {
-      if (selectedRegion === 'all') {
-        regionUrl = 'https://restcountries.com/v3.1/all?';
-      }
-      fetch(regionUrl)
-      .then((response) => response.json())
-      .then((data) => {
-          setCountryData(data);
-      })
-    } else {
-      fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (selectedRegion === 'all') {
-          setCountryData(data);
-          console.log(data)
-        } else {
-          let tempArray = data.filter((country) => country.region === selectedRegion);
-          setCountryData(tempArray);
-        }
-    })
-    }    
+    const searchRegExp = new RegExp(searchInput, 'gi');
+    const searchResults = countryData.filter((country) => searchRegExp.test(country['name']['common']))
+
+    setFilteredCountries(searchResults);
   }
 
+  const filterByRegion = (selectedRegion) => {
+    
+    let regionFilteredUrl = `https://restcountries.com/v3.1/region/${selectedRegion}`;
+    
+    if (selectedRegion === 'all') {
+      regionFilteredUrl = 'https://restcountries.com/v3.1/all?'
+    }
+    fetch(regionFilteredUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      setCountryData(data);
+      if (input == '') {
+        return setFilteredCountries(data);
+      }
+      
+      const searchRegExp = new RegExp(input, 'gi');
+      const searchResults = data.filter((country) => searchRegExp.test(country['name']['common']))
+
+      setFilteredCountries(searchResults);
+    })
+  }
 
   return (
     <div className="bg-light-very-light-gray 
@@ -197,11 +153,11 @@ export default function Home() {
         xl:grid-cols-4
         xl:px-24">
 
-          {countryData.map((item, index) => {
+          {filteredCountries.map((item, index) => {
             return(
-              <Link href={{ pathname: '/pages/countrydetails', query: { country: countryData[index].name.official } }}
+              <Link href={{ pathname: '/pages/countrydetails', query: { country: filteredCountries[index].name.official } }}
               key={index} >
-                <CountryTile countryData={countryData} countryIndex={index} />
+                <CountryTile countryData={filteredCountries} countryIndex={index} />
               </Link>
             )
         })}
