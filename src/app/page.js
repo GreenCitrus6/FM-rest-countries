@@ -43,7 +43,8 @@ function FilterPicker({ filterByRegion }) {
   }
   
   return(
-    <select id="regionSelector" className="w-48 h-12 
+    <select id="regionSelector" name="region"
+    className="w-48 h-12 
     ml-5 mt-4 mb-1 pl-4
     rounded-md 
     shadow-md shadow-gray-100
