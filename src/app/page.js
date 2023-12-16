@@ -19,14 +19,16 @@ function SearchBar( {filterByName, setInput} ) {
     mt-[2.25em] ml-[2.25rem]
     sm:ml-[0.75rem]
     sm:justify-start">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mr-[-4rem] z-10 text-[rgb(192,196,204)]">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 mr-[-4rem] z-10 text-[rgb(192,196,204)]
+      dark:text-light-very-light-gray">
         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
       </svg>
 
       <input id="searchBar" className="w-[calc(100%)] h-14 
       m-6 mt-[-0.9em] pl-16
       rounded-lg shadow-md
-      sm:max-w-[30rem]" 
+      sm:max-w-[30rem]
+      dark:bg-dark-dark-blue" 
       type="text"
       placeholder="Search for a country..."
       onChange={handleInput} />
@@ -43,7 +45,9 @@ function FilterPicker({ filterByRegion }) {
     <select id="regionSelector" className="w-48 h-12 
     ml-5 mt-4 mb-1 pl-4
     rounded-md 
-    shadow-md shadow-gray-100"
+    shadow-md shadow-gray-100
+    dark:shadow-gray-900
+    dark:bg-dark-dark-blue dark:text-light-white"
     defaultValue="all" onChange={handlePickRegion}>
       <option value="all">Filter by Region</option>
       <option value="Africa">Africa</option>
@@ -155,7 +159,8 @@ export default function Home() {
   return (
     <div className="bg-light-very-light-gray 
     w-full min-h-screen mt-[6rem]
-    font-Nunito">
+    font-Nunito
+    dark:bg-dark-very-dark-blue">
       <main className="flex flex-col 
       w-full">
         

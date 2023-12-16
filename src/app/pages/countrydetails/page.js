@@ -239,7 +239,8 @@ export default function CountryDetails() {
         
         return (
             <span className="bg-light-very-light-gray shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center
-            md:min-w-[6.5rem]">
+            md:min-w-[6.5rem]
+            dark:bg-dark-dark-blue">
                 {country}
             </span>
         )
@@ -253,7 +254,9 @@ export default function CountryDetails() {
         font-Nunito
         md:grid md:grid-cols-2 md:items-middle md:gap-16 md:pt-[calc(6rem)]
         lg:gap-28
-        xl:px-24">
+        xl:px-24
+        dark:bg-dark-very-dark-blue
+        dark:text-light-white">
             <div className="
             md:grid md:grid-rows-[100px_minmax(100px,_1fr)]">
                 <Link href="/">
@@ -262,7 +265,8 @@ export default function CountryDetails() {
                     w-32 h-10 mb-24
                     md:mb-0
                     flex justify-center items-center 
-                    text-lg">
+                    text-lg
+                    dark:bg-dark-dark-blue dark:shadow-gray-900">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
                         </svg>

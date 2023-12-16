@@ -11,7 +11,7 @@ export default function HandleDarkMode( {children} ) {
     
     return (
         <div className={(isDarkMode ? 'dark' : '') + " w-full overflow-x-hidden"}>
-            <Header handleSetDarkMode={handleSetDarkMode} />
+            <Header handleSetDarkMode={handleSetDarkMode} isDarkMode={isDarkMode} />
             { children } 
         </div>
      )
