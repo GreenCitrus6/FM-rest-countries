@@ -6,7 +6,7 @@ import HandleDarkMode from './handledarkmode'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'REST Api Country Viewer',
+  title: 'REST API Country Viewer',
   description: 'Challenge on Frontend Mentor, project created with Next.js',
 }
 

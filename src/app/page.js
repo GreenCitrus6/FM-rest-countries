@@ -7,8 +7,7 @@ import CountryTile from './countrytile'
 function SearchBar( {filterByName, setInput} ) {
 
   const handleInput = (e) => {
-    let input = (e.target.value).replace(/\W/gi, '');
-    
+    let input = (e.target.value).replace(/[^\w\s]/gi, '');
     filterByName(input);
     setInput(input);
   } 
