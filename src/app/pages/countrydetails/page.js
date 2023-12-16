@@ -220,8 +220,6 @@ export default function CountryDetails() {
         })
     }, [])
 
-
-
     function listObj(obj, deeperKey) {
         let tempArr = [];
         if (deeperKey !== 'none') {
@@ -240,7 +238,8 @@ export default function CountryDetails() {
     function BorderCountry({ country, index }) {
         
         return (
-            <span className="bg-white shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center">
+            <span className="bg-light-very-light-gray shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center
+            md:min-w-[6.5rem]">
                 {country}
             </span>
         )
@@ -249,14 +248,19 @@ export default function CountryDetails() {
     return(
         <main className="bg-light-very-light-gray
         min-h-[calc(100vh-6rem)] w-full mt-[6rem]
-        grid columns-1 justify-center
+        flex flex-col justify-start
         p-8
-        font-Nunito">
-            <div>
+        font-Nunito
+        md:grid md:grid-cols-2 md:items-middle md:gap-16 md:pt-[calc(6rem)]
+        lg:gap-28
+        xl:px-24">
+            <div className="
+            md:grid md:grid-rows-[100px_minmax(100px,_1fr)]">
                 <Link href="/">
                     <button className="bg-white shadow-md shadow-gray-300
                     rounded-md
-                    w-32 h-10 mb-16
+                    w-32 h-10 mb-24
+                    md:mb-0
                     flex justify-center items-center 
                     text-lg">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -268,39 +272,63 @@ export default function CountryDetails() {
 
                 <img src={currentCountry[0].flags.svg + "#svgView(preserveAspectRatio(none))"} alt={currentCountry[0].flags.alt} className="w-full aspect-[3/2]"/>
             </div>
-            <div className="mt-10">
+            <div className="">
+            <div className="
+            md:grid md:grid-cols-2 md:grid-rows-[50px_1fr_1fr]
+            md:aspect-[3/2] md:mt-[100px]
+            lg:grid-rows-[100px_1.4fr_0.6fr]">
                 <h2 className="font-extrabold text-2xl
-                mb-7">{currentCountry[0].name.common}</h2>
+                mb-7
+                lg:mt-10
+                md:col-span-2
+                md:text-4xl">{currentCountry[0].name.common}</h2>
 
-                <div>
-                    <p className="my-3"><span className="font-semibold">Native Name: </span>{
+                <div className="md:justify-items-end 
+                md:text-xl">
+                    <p className="my-3 
+                    md:my-2"><span className="font-semibold">Native Name: </span>{
                     listObj(currentCountry[0].name.nativeName, 'common')
                     }</p>
-                    <p className="my-3"><span className="font-semibold">Population: </span>{(currentCountry[0].population).toLocaleString('US-en')}</p>
-                    <p className="my-3"><span className="font-semibold">Region: </span>{currentCountry[0].region}</p>
-                    <p className="my-3"><span className="font-semibold">Sub Region: </span>{currentCountry[0].subregion}</p>
-                    <p className="my-3"><span className="font-semibold">Capital: </span>{currentCountry[0].capital}</p>
+                    <p className="my-3 
+                    md:my-2"><span className="font-semibold">Population: </span>{(currentCountry[0].population).toLocaleString('US-en')}</p>
+                    <p className="my-3
+                    md:my-2"><span className="font-semibold">Region: </span>{currentCountry[0].region}</p>
+                    <p className="my-3
+                    md:my-2"><span className="font-semibold">Sub Region: </span>{currentCountry[0].subregion}</p>
+                    <p className="my-3
+                    md:my-2"><span className="font-semibold">Capital: </span>{currentCountry[0].capital}</p>
                 </div>
                 
-                <div className="mt-10">
-                    <p className="my-3"><span className="font-semibold">Top Level Domain: </span>{currentCountry[0].tld}</p>
-                    <p className="my-3"><span className="font-semibold">Currencies: </span>{listObj(currentCountry[0].currencies, 'name')}</p>
-                    <p className="my-3"><span className="font-semibold">Languages: </span>{listObj(currentCountry[0].languages, 'none')}</p>
+                <div className="mt-10
+                md:mt-0
+                md:text-xl">
+                    <p className="my-3
+                    md:my-2"><span className="font-semibold">Top Level Domain: </span>{currentCountry[0].tld}</p>
+                    <p className="my-3
+                    md:my-2"><span className="font-semibold">Currencies: </span>{listObj(currentCountry[0].currencies, 'name')}</p>
+                    <p className="my-3
+                    md:my-2"><span className="font-semibold">Languages: </span>{listObj(currentCountry[0].languages, 'none')}</p>
+                </div>
+                <div className="mt-6
+                md:flex md:col-span-2 md:w-full">
+                    <h3 className="font-bold text-xl
+                    whitespace-nowrap
+                    mb-4
+                    md:mr-4">Border Countries: </h3>
+                
+                    <div className="grid grid-cols-3 gap-3
+                    md:grid-cols-2
+                    lg:grid-cols-3
+                    xl:grid-cols-4">        
+                        {('borders' in currentCountry[0] ? currentCountry[0].borders.map((item, index) => {
+                            return (
+                                <BorderCountry key={index} index={index} country={item} />
+                            )
+                            }) : <BorderCountry country="None" />)}
+                    </div>
+
                 </div>
             </div>
-            <div className="mt-6">
-                <h3 className="font-bold text-xl
-                mb-4">Border Countries: </h3>
-                
-                <div className="grid grid-cols-3 gap-3 ">
-                    
-                    {('borders' in currentCountry[0] ? currentCountry[0].borders.map((item, index) => {
-                        return (
-                            <BorderCountry key={index} index={index} country={item} />
-                        )
-                    }) : <BorderCountry country="None" />)}
-                </div>
-
             </div>
             
         </main>
