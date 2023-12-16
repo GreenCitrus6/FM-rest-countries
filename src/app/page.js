@@ -161,7 +161,6 @@ export default function Home() {
   return (
     <div className="bg-light-very-light-gray 
     w-full min-h-screen mt-[6rem]
-    font-Nunito
     dark:bg-dark-very-dark-blue
     ease-out duration-300">
       <main className="flex flex-col 

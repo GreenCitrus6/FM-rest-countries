@@ -252,7 +252,6 @@ export default function CountryDetails() {
         min-h-[calc(100vh-6rem)] w-full mt-[6rem]
         flex flex-col justify-start
         p-8
-        font-Nunito
         md:grid md:grid-cols-2 md:items-middle md:gap-16 md:pt-[calc(6rem)]
         lg:gap-28
         xl:px-24

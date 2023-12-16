@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="w-full overflow-x-hidden">
-      <body className={inter.className + " w-full overflow-x-hidden"}>
+      <body className={inter.className + " w-full overflow-x-hidden font-Nunito"}>
         <HandleDarkMode>
             {children}
         </HandleDarkMode>
