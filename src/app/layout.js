@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from './header'
+import HandleDarkMode from './handledarkmode'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,9 +14,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="w-full overflow-x-hidden">
       <body className={inter.className + " w-full overflow-x-hidden"}>
-          <Header />
-          {children}
-
+        <HandleDarkMode>
+            {children}
+        </HandleDarkMode>
         </body>
     </html>
   )
