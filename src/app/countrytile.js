@@ -4,7 +4,12 @@ export default function CountryTile({ countryData, countryIndex }) {
     return(
         <div className="bg-light-white rounded-lg overflow-hidden shadow-md shadow-gray-100
         max-w-[320px] h-full
-        dark:bg-dark-dark-blue dark:shadow-gray-900 dark:text-light-white">
+        hover:bg-[hsl(0,0,95%)]
+        active:bg-gray-200
+        dark:bg-dark-dark-blue dark:shadow-gray-900 dark:text-light-white
+        dark:hover:bg-[hsl(209,23%,20%)]
+        dark:active:bg-[hsl(209,23%,16%)]
+        ease-out duration-300">
             <img src={countryData[countryIndex].flags.svg+'#svgView(preserveAspectRatio(none))'} alt={`flag of ${countryData[countryIndex].name.common}`} 
             className="w-full aspect-[3/2]"/>
             

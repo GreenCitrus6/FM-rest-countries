@@ -28,7 +28,8 @@ function SearchBar( {filterByName, setInput} ) {
       m-6 mt-[-0.9em] pl-16
       rounded-lg shadow-md
       sm:max-w-[30rem]
-      dark:bg-dark-dark-blue" 
+      dark:bg-dark-dark-blue
+      ease-out duration-300" 
       type="text"
       placeholder="Search for a country..."
       onChange={handleInput} />
@@ -47,7 +48,8 @@ function FilterPicker({ filterByRegion }) {
     rounded-md 
     shadow-md shadow-gray-100
     dark:shadow-gray-900
-    dark:bg-dark-dark-blue dark:text-light-white"
+    dark:bg-dark-dark-blue dark:text-light-white
+    ease-out duration-300"
     defaultValue="all" onChange={handlePickRegion}>
       <option value="all">Filter by Region</option>
       <option value="Africa">Africa</option>
@@ -160,7 +162,8 @@ export default function Home() {
     <div className="bg-light-very-light-gray 
     w-full min-h-screen mt-[6rem]
     font-Nunito
-    dark:bg-dark-very-dark-blue">
+    dark:bg-dark-very-dark-blue
+    ease-out duration-300">
       <main className="flex flex-col 
       w-full">
         <div className="italic absolute left-4 top-[6.75rem]

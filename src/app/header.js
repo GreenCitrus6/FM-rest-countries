@@ -15,11 +15,14 @@ export default function Header( {handleSetDarkMode, isDarkMode} ) {
         xl:px-24
         dark:bg-dark-dark-blue
         dark:text-light-white
-        dark:shadow-gray-900">
-            <h1 className="text-[1.2rem] font-bold
+        dark:shadow-gray-900
+        ease-out duration-300">
+            <h1 className="font-bold
             sm:text-2xl">Where in the world?</h1>
             <div className="flex 
-            hover:cursor-pointer"
+            hover:cursor-pointer
+            hover:text-[1.1rem]
+            ease-out duration-300"
             onClick={() => handleSetDarkMode() }>
                 <svg xmlns="http://www.w3.org/2000/svg" fill={isDarkMode ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
