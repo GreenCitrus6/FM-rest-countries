@@ -29,6 +29,7 @@ function SearchBar( {filterByName, setInput} ) {
       rounded-lg shadow-md
       sm:max-w-[30rem]
       dark:bg-dark-dark-blue
+      dark:text-light-white
       ease-out duration-300" 
       type="text"
       placeholder="Search for a country..."
@@ -166,10 +167,12 @@ export default function Home() {
     ease-out duration-300">
       <main className="flex flex-col 
       w-full">
-        <div className="italic absolute left-4 top-[6.75rem]
+        <div className="italic absolute left-4 top-[11.2rem]
+        sm:top-[6.75rem]
         md:left-8
         xl:left-24
-        dark:text-light-white">
+        dark:text-light-white
+        ease-out duration-300">
           <p>Challenge by <Link 
           href="https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca" 
           target="_blank"
