@@ -44,7 +44,7 @@ function FilterPicker({ filterByRegion }) {
   }
   
   return(
-    <select id="regionSelector" name="region"
+    <select id="regionSelector" name="region" role="select" 
     className="w-48 h-12 
     ml-5 mt-4 mb-1 pl-4
     rounded-md 
@@ -53,13 +53,13 @@ function FilterPicker({ filterByRegion }) {
     dark:bg-dark-dark-blue dark:text-light-white
     ease-out duration-300"
     defaultValue="all" onChange={handlePickRegion}>
-      <option value="all">Filter by Region</option>
-      <option value="Africa">Africa</option>
-      <option value="America">America</option>
-      <option value="Asia">Asia</option>
-      <option value="Europe">Europe</option>
-      <option value="Oceania">Oceania</option>
-      <option value="Antarctic">Antarctic</option>
+      <option role="option" value="all">Filter by Region</option>
+      <option role="option" value="Africa">Africa</option>
+      <option role="option" value="America">America</option>
+      <option role="option" value="Asia">Asia</option>
+      <option role="option" value="Europe">Europe</option>
+      <option role="option" value="Oceania">Oceania</option>
+      <option role="option" value="Antarctic">Antarctic</option>
     </select>
   )
 }
