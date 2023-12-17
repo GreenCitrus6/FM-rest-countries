@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import CountryTile from './countrytile'
 
-function SearchBar( {filterByName, setInput } ) {
+function SearchBar( {filterByName, setCurrentInput } ) {
 
   const handleInput = (e) => {
     let input = (e.target.value).replace(/[^\w\s]/gi, '');
     filterByName(input);
-    setInput(input);
+    setCurrentInput(input);
+    //State to be used upon changing filter, so that both the name and region filters are applied
   } 
 
   return(
@@ -69,15 +70,16 @@ export default function Home() {
   //Data of countries that fit the region and search filters. This one is rendered to the DOM
   const [filteredCountries, setFilteredCountries] = useState([]);
 
-  const [input, setInput] = useState('');
+  const [currentInput, setCurrentInput] = useState('');
 
   useEffect(() => {   
+    // Import a list of all countries from RESTcountries API upon page load.
     fetch('https://restcountries.com/v3.1/all?')
     .then((response) => response.json())
     .then((data) => {
       setCountryData(data);
       setFilteredCountries(data);
-      console.log(data);
+      
     })
   }, [])
 
@@ -94,21 +96,22 @@ export default function Home() {
   }
 
   const filterByRegion = (selectedRegion) => {
-    
     let regionFilteredUrl = `https://restcountries.com/v3.1/region/${selectedRegion}`;
     
     if (selectedRegion === 'all') {
       regionFilteredUrl = 'https://restcountries.com/v3.1/all?'
     }
+
     fetch(regionFilteredUrl)
     .then((response) => response.json())
     .then((data) => {
       setCountryData(data);
-      if (input == '') {
+      if (currentInput == '') {
         return setFilteredCountries(data);
       }
       
-      const searchRegExp = new RegExp(input, 'gi');
+      // If there is text in the input field, apply a search filter after the region filter
+      const searchRegExp = new RegExp(currentInput, 'gi');
       const searchResults = data.filter((country) => searchRegExp.test(country['name']['common']))
 
       setFilteredCountries(searchResults);
@@ -139,7 +142,7 @@ export default function Home() {
         <div className="sm:flex sm:flex-row sm:items-center
         sm:px-8 sm:mt-8
         xl:px-24">
-          <SearchBar filterByName={filterByName} setInput={setInput} />
+          <SearchBar filterByName={filterByName} setCurrentInput={setCurrentInput} />
           <FilterPicker filterByRegion={filterByRegion} />
         </div>
 
@@ -153,13 +156,15 @@ export default function Home() {
         xl:grid-cols-4
         xl:px-24">
 
-          {filteredCountries.map((item, index) => {
-            return(
-              <Link href={{ pathname: '/pages/countrydetails', query: { country: filteredCountries[index].name.official } }}
-              key={index} >
-                <CountryTile countryData={filteredCountries} countryIndex={index} />
-              </Link>
-            )
+        
+        { /* For every country in the filterCountries array, render a CountryTile to the DOM */
+        filteredCountries.map((item, index) => {
+          return(
+            <Link href={{ pathname: '/pages/countrydetails', query: { country: item.name.official } }}
+            key={index} >
+              <CountryTile countryData={filteredCountries} countryIndex={index} />
+            </Link>
+          )
         })}
 
         </section>

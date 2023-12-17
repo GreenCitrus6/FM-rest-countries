@@ -201,26 +201,49 @@ export default function CountryDetails() {
             "regex": "^(\\d{4})$"
         }
     }]); //placeholder so that the page doesn't crash upon loading before currentCountry's state is pulled from the API
-    // const [borderCountries, setBorderCountries] = useState([]);
-    const [borderCountries, setBorderCountries] = useState([]);
+    let allCountries = []; //Array of all countries fetched from API, does not change after initial call
+    let borderCountryCodes = []; //The contents of 'borders' within the current country. Formatted as cca3 country codes.
     
+    const [borderCountryNames, setBorderCountryNames] = useState(['None']);
+
     // Get what country is to be displayed from the query
     const searchParams = useSearchParams() 
     const country = searchParams.get('country')
-    
-    // Fetch data for the displayed country from API, set it to CurrentCountry
+
+
     useEffect(() => {
-        fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
+        fetch('https://restcountries.com/v3.1/all?')
         .then((response) => response.json())
         .then((data) => {
-            setCurrentCountry([...data]);
-        })
-        .catch((err) => {
-            console.log(err.message);
+            allCountries = [...data];
+   
+            let filteredForCurrentCountry = [...data.filter(item => item['name']['official'] === country)] //find the country to be displayed based on the query
+            
+            borderCountryCodes = ('borders' in filteredForCurrentCountry[0] ? [...filteredForCurrentCountry[0]['borders']] : ['None']) 
+            /* if the object for the country to be displayed does not have a 'borders' key, show 'None'
+            if it is present, then set the borderCountries array to be the contents of that array*/
+
+            setCurrentCountry(filteredForCurrentCountry);
+            fetchBorderCountryNames();
         })
     }, [])
 
+    const fetchBorderCountryNames = () => {
+        //only run if there are border countries present
+        if (borderCountryCodes[0] !== 'None') {
+            let filteredByAllCountryCodes = [];
+            //for every country code present in borderCountryCodes, find the corresponding object and add its common name to a temporary array
+            for (let code in borderCountryCodes) {
+                const filteredBySingleCode = allCountries.filter((country) => country['cca3'] === borderCountryCodes[code]);
+                filteredByAllCountryCodes.push(filteredBySingleCode[0]['name']['common']);
+            }
+            setBorderCountryNames([...filteredByAllCountryCodes])
+            console.log(filteredByAllCountryCodes)
+        }
+    }
+
     function listObj(obj, deeperKey) {
+        // Returns the contents of an object as a joined string. Ex. a country with multiple languages
         let tempArr = [];
         if (deeperKey !== 'none') {
             for (let prop in obj) {
@@ -235,14 +258,15 @@ export default function CountryDetails() {
         return (tempArr.join(', '));
     }
 
-    function BorderCountry({ country, index }) {
-        // Card for border countries
+
+    function BorderCountry({ index, borderCountryNames }) {
+
         return (
-            <span className="bg-light-very-light-gray shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center
+            <span className="bg-light-very-light-gray shadow-[0_0_6px_-1px_rgba(0,0,0,0.3)] rounded-sm h-10 flex justify-center items-center text-center leading-3
             md:min-w-[6.5rem]
             dark:bg-dark-dark-blue
             ease-out duration-300">
-                {country}
+                {borderCountryNames[index]}
             </span>
         )
     }
@@ -282,7 +306,7 @@ export default function CountryDetails() {
 
                 <img src={currentCountry[0].flags.svg + "#svgView(preserveAspectRatio(none))"} alt={currentCountry[0].flags.alt} className="w-full aspect-[3/2]"/>
             </div>
-            <div className="">
+            <div className="pt-8 md:pt-0">
             <div className="
             md:grid md:grid-cols-2 md:grid-rows-[50px_1fr_1fr]
             md:aspect-[3/2] md:mt-[100px]
@@ -330,11 +354,11 @@ export default function CountryDetails() {
                     md:grid-cols-2
                     lg:grid-cols-3
                     xl:grid-cols-4">        
-                        {('borders' in currentCountry[0] ? currentCountry[0].borders.map((item, index) => {
-                            return (
-                                <BorderCountry key={index} index={index} country={item} />
-                            )
-                            }) : <BorderCountry country="None" />)}
+                            {borderCountryNames.map((item, index) => {
+                                return (
+                                    <BorderCountry key={index} index={index} country={item} borderCountryNames={borderCountryNames} fetchBorderCountryNames={fetchBorderCountryNames} />
+                                )
+                            })}
                     </div>
 
                 </div>
