@@ -72,5 +72,5 @@ One feature that I couldn't figure out was rendering bordering countries using t
 
 ## Author
 
-- Website - [Daniel Aadland](https://portfolio-website-rgm2jbtrb-greencitrus6s-projects.vercel.app/)
+- Website - [Daniel Aadland](https://portfolio-website-git-main-greencitrus6s-projects.vercel.app/)
 - Frontend Mentor - [@GreenCitrus6](https://www.frontendmentor.io/profile/GreenCitrus6)

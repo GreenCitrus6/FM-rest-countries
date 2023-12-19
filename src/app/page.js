@@ -135,7 +135,7 @@ export default function Home() {
           href="https://www.frontendmentor.io/challenges/rest-countries-api-with-color-theme-switcher-5cacc469fec04111f7b848ca" 
           target="_blank"
           className="text-sky-600">Frontend Mentor</Link>. Coded by <Link 
-          href="https://portfolio-website-rgm2jbtrb-greencitrus6s-projects.vercel.app/" 
+          href="https://portfolio-website-git-main-greencitrus6s-projects.vercel.app/" 
           target="_blank"
           className="text-sky-600">Daniel Aadland</Link></p>
         </div>
