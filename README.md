@@ -63,7 +63,7 @@ I also learned how to create a dark mode theme using Tailwind. To handle togglin
 
 Going further I'd like to further develop my understanding of state and asynchronous functions and promises. I struggled a lot with infinite loops and states being updated after the rest of a function finishes. 
 
-One feature that I couldn't figure out was rendering bordering countries using their common names instead of 3 character country code in the Country Details page. In order to accomplish this I would imagine another asynchronous function would be needed to fetch them from the the REST API based on the codes found in the object of the current country, but I couldn't get it to work. I might go back and try to fix this after deepening my understanding of API requests, React hooks and JS promises.
+I managed to get border countries to render with their full names, and determined that it would be easier to simply send a single API request upon page load, then filter the array of all countries based upon the query string. For further development, I would like to further reduce the number of API calls required by the application, allowing the user to keep using the application if their internet connection cuts out. 
 
 ### Useful resources
 
