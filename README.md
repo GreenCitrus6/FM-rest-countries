@@ -35,8 +35,8 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Solution URL: [fm-rest-countries-six.vercel.app](https://fm-rest-countries-six.vercel.app)
+- Live Site URL: [https://www.frontendmentor.io/solutions/rest-api-country-viewer-with-dark-mode-made-with-nextjs-xbsJNC7K25](https://www.frontendmentor.io/solutions/rest-api-country-viewer-with-dark-mode-made-with-nextjs-xbsJNC7K25)
 
 ## My process
 
